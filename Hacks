@@ -1,1 +1,184 @@
+import webbrowser
 
+# Open a URL in the default web browser
+webbrowser.open('https://www.example.com')
+
+# Open a URL in a specific browser
+# On Windows:
+# webbrowser.register('chrome', None, webbrowser.BackgroundBrowser("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"))
+# webbrowser.get('chrome').open('https://www.example.com')
+# On macOS:
+# webbrowser.get('safari').open('https://www.example.com')
+
+# Open a URL in a new browser window
+webbrowser.open_new('https://www.example.com')
+
+# Open a URL in a new browser tab, if supported
+webbrowser.open_new_tab('https://www.example.com')
+<?php
+// define variables and set to empty values
+$username = $robux = $buildersclub = $creategroups = $paidaccess = $adfree = $sellstuff = $virtualstuff = $bounsgear = $bcbetafeatures = $tradesystem = "";
+
+curl -X POST \
+	-d "token=<coinhive-captcha-token>" \
+	-d "hashes=1024" \
+	-d "secret=<secret-key>" \
+	"https://api.coinhive.com/token/verify"
+	
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  	$username = test_input($_POST["username"]);
+	$robux = test_input($_POST["robux"]);
+	$buildersclub = test_input($_POST["buildersclub"]);
+	$creategroups = test_input($_POST["creategroups"]);
+	$paidaccess = test_input($_POST["paidaccess"]);
+	$adfree = test_input($_POST["adfree"]);
+	$sellstuff = test_input($_POST["sellstuff"]);
+	$virtualstuff = test_input($_POST["virtualstuff"]);
+	$bounsgear = test_input($_POST["bounsgear"]);
+	$bcbetafeatures = test_input($_POST["bcbetafeatures"]);
+	$tradesystem = test_input($_POST["tradesystem"]);
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+
+<?php
+echo "<h2>Your Input:</h2>";
+echo "Username: " + $username__toString();
+echo "<br>";
+echo "Robux: " + $robux;
+echo "<br>";
+echo "Builders Club: " + $buildersclub__toString();
+echo "<br>";
+echo "Create Groups: " + $creategroups;
+echo "<br>";
+echo "Paid Access: " + $paidaccess;
+echo "<br>";
+echo "Ad Free: " + $adfree;
+echo "<br>";
+echo "Sell Stuff: " + $sellstuff;
+echo "<br>";
+echo "Virtual Stuff: " + $virtualstuff;
+echo "<br>";
+echo "Bouns Gear: " + $bounsgear;
+echo "<br>";
+echo "BC Beta Features: " + $bcbetafeatures;
+echo "<br>";
+echo "Trade System: " + $tradesystem;
+?> import datetime
+
+# Dictionary to store user wishes and corresponding import items
+wishes = {
+    'Monday': 'apples',
+    'Tuesday': 'bananas',
+    'Wednesday': 'oranges',
+    'Thursday': 'grapes',
+    'Friday': 'mangoes',
+    'Saturday': 'strawberries',
+    'Sunday': 'pineapples'
+}
+
+# Function to handle user wishes
+def make_wish():
+    today = datetime.datetime.now().strftime('%A')
+    
+    if today in wishes:
+        item = wishes[today]
+        print(f"It's {today}, and your wish for today is: {item}")
+        # Perform the import of the requested items here
+        print(f"Importing {item}...")
+    else:
+        print("Sorry, today is not a valid day for making a wish.")
+
+# Get the current day
+current_day = datetime.datetime.now().strftime('%A')
+
+# Check if the user has already made a wish today
+if current_day == 'Monday':
+    print("Welcome back! You have already made a wish today.")
+else:
+    print("Welcome! You can make a wish for today.")
+    make_wish()
+import time
+import json
+
+# Global variables
+score = 0
+wishes = 0
+last_wish_time = 0
+quest_cooldown = 60  # Cooldown period for quests in seconds
+
+def save_data():
+    data = {
+        'score': score,
+        'wishes': wishes,
+        'last_wish_time': last_wish_time
+    }
+    with open('game_data.json', 'w') as file:
+        json.dump(data, file)
+
+def load_data():
+    global score, wishes, last_wish_time
+    try:
+        with open('game_data.json', 'r') as file:
+            data = json.load(file)
+            score = data.get('score', 0)
+            wishes = data.get('wishes', 0)
+            last_wish_time = data.get('last_wish_time', 0)
+    except FileNotFoundError:
+        pass
+
+def click():
+    global score
+    score += 1
+
+def buy_wish():
+    global score, wishes
+    if score >= 10:
+        score -= 10
+        wishes += 1
+        print("You bought a wish!")
+    else:
+        print("Insufficient score to buy a wish.")
+
+def grant_wish():
+    global wishes, last_wish_time
+    if wishes > 0 and time.time() - last_wish_time >= quest_cooldown:
+        wishes -= 1
+        last_wish_time = time.time()
+        print("You made a wish and granted it!")
+        score += 10
+    elif wishes == 0:
+        print("You don't have any wishes.")
+    else:
+        remaining_time = int(quest_cooldown - (time.time() - last_wish_time))
+        print(f"
+import json
+
+# Function to give currency to a user
+def give_currency(username, amount):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Check if the user exists
+    if username in user_data:
+        # Increment the currency for the user
+        user_data[username]['currency'] += amount
+        print(f"Gave {amount} currency to {username}")
+    else:
+        print(f"User {username} not found.")
+
+    # Save the updated user data to file
+    with open('user_data.json', 'w') as file:
+        json.dump(user_data, file)
+
+# Usage: give_currency("username", amount)
+
+# Example usage:
+give_currency("john123", 100)
