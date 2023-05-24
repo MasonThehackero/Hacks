@@ -353,3 +353,12 @@ if validate_admin(username):
         print("Invalid action")
 else:
     print("Admin access denied")
+import os
+
+def is_running_on_roblox():
+    return "Roblox" in os.getenv("USERAGENT", "")
+
+if is_running_on_roblox():
+    print("Running within the Roblox environment")
+else:
+    print("Not running within the Roblox environment")
