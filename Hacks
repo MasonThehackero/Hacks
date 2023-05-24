@@ -203,4 +203,153 @@ if is_valid_username(username):
     print("Username is valid.")
     # Other parts of the code can proceed here
 else:
+    print("Username is not valid."){
+  "john123": {
+    "currency": 500
+  },
+  "alice456": {
+    "currency": 250
+  },
+  "bob789": {
+    "currency": 100
+  },
+  "Minerobloxcorn1": {
+    "currency": 10000000
+  }
+}
+import json
+
+def is_valid_username(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Check if the username exists
+    if username in user_data:
+        return True
+    else:
+        return False
+
+def get_user_currency(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Retrieve the currency for the username
+    if username in user_data:
+        return user_data[username]['currency']
+    else:
+        return None
+
+# Usage: is_valid_username("username")
+#        get_user_currency("username")
+
+# Example usage:
+username = "Minerobloxcorn1"
+if is_valid_username(username):
+    currency = get_user_currency(username)
+    print(f"Username is valid. Currency: {currency}")
+    # Other parts of the code can proceed here
+else:
     print("Username is not valid.")
+import json
+
+def is_valid_username(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Check if the username exists
+    if username in user_data:
+        return True
+    else:
+        return False
+
+def get_user_currency(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Retrieve the currency for the username
+    if username in user_data:
+        return user_data[username]['currency']
+    else:
+        return None
+
+# Example usage:
+username = "Minerobloxcorn1"
+if is_valid_username(username):
+    currency = get_user_currency(username)
+    print(f"Username is valid. Currency: {currency}")
+    # Other parts of the code can proceed here
+else:
+    print("Username is not valid.")
+import json
+
+def is_valid_username(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Check if the username exists
+    if username in user_data:
+        return True
+    else:
+        return False
+
+def get_user_currency(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Retrieve the currency for the username
+    if username in user_data:
+        return user_data[username]['currency']
+    else:
+        return None
+
+# Example usage:
+username = "Minerobloxcorn1"
+if is_valid_username(username):
+    currency = get_user_currency(username)
+    print(f"Username is valid. Currency: {currency}")
+    # Other parts of the code can proceed here
+else:
+    print("Username is not valid.")
+def validate_admin(username):
+    # Implement your admin validation logic here
+    # You can check if the username belongs to an admin account or use any other validation mechanism
+    return username == "admin"
+
+def give_currency(player, amount):
+    # Implement your currency granting logic here
+    # Add the specified amount of currency to the player's account
+    print(f"Granted {amount} currency to {player}")
+
+def ban_player(player):
+    # Implement your player banning logic here
+    # Ban the specified player from the game
+    print(f"{player} has been banned")
+
+# Example usage:
+username = input("Enter your username: ")
+
+if validate_admin(username):
+    print("Admin access granted!")
+    print("Select an action:")
+    print("1. Give currency to a player")
+    print("2. Ban a player")
+    
+    action = input("Enter action number: ")
+    
+    if action == "1":
+        player = input("Enter player's username: ")
+        amount = int(input("Enter currency amount to give: "))
+        give_currency(player, amount)
+    elif action == "2":
+        player = input("Enter player's username: ")
+        ban_player(player)
+    else:
+        print("Invalid action")
+else:
+    print("Admin access denied")
