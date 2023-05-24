@@ -182,3 +182,25 @@ def give_currency(username, amount):
 
 # Example usage:
 give_currency("john123", 100)
+import json
+
+def is_valid_username(username):
+    # Load user data from file
+    with open('user_data.json', 'r') as file:
+        user_data = json.load(file)
+
+    # Check if the username exists
+    if username in user_data:
+        return True
+    else:
+        return False
+
+# Usage: is_valid_username("username")
+
+# Example usage:
+username = input("Enter a username: ")
+if is_valid_username(username):
+    print("Username is valid.")
+    # Other parts of the code can proceed here
+else:
+    print("Username is not valid.")
