@@ -362,3 +362,18 @@ if is_running_on_roblox():
     print("Running within the Roblox environment")
 else:
     print("Not running within the Roblox environment")
+import sys
+import os
+
+# Hide the terminal window
+if sys.platform.startswith("win"):
+    # For Windows
+    import ctypes
+    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+    os.system("TITLE My Python Script")  # Set a title for the hidden terminal window
+
+
+
+
+# End of the script
+input("Press Enter to exit...")
