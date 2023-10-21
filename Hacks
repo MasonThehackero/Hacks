@@ -1,379 +1,273 @@
-import webbrowser
+--[[
+	SERVER PLUGINS' NAMES MUST START WITH "Server:" OR "Server-"
+	CLIENT PLUGINS' NAMES MUST START WITH "Client:" OR "Client-"
 
-# Open a URL in the default web browser
-webbrowser.open('https://www.example.com')
+	Plugins have full access to the server/client tables and most variables.
 
-# Open a URL in a specific browser
-# On Windows:
-# webbrowser.register('chrome', None, webbrowser.BackgroundBrowser("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"))
-# webbrowser.get('chrome').open('https://www.example.com')
-# On macOS:
-# webbrowser.get('safari').open('https://www.example.com')
+	You can use the MakePluginEvent to use the script instead of setting up an event.
+	PlayerChatted will get chats from the custom chat and nil players.
+	PlayerJoined will fire after the player finishes initial loading
+	CharacterAdded will also fire after the player is loaded, it does not use the CharacterAdded event.
 
-# Open a URL in a new browser window
-webbrowser.open_new('https://www.example.com')
+	service.Events.PlayerChatted(function(plr, msg)
+		print(`{msg} from {plr.Name} Example Plugin`)
+	end)
 
-# Open a URL in a new browser tab, if supported
-webbrowser.open_new_tab('https://www.example.com')
-<?php
-// define variables and set to empty values
-$username = $robux = $buildersclub = $creategroups = $paidaccess = $adfree = $sellstuff = $virtualstuff = $bounsgear = $bcbetafeatures = $tradesystem = "";
+	service.Events.PlayerAdded(function(p)
+		print(`{p.Name} Joined! Example Plugin`)
+	end)
 
-curl -X POST \
-	-d "token=<coinhive-captcha-token>" \
-	-d "hashes=1024" \
-	-d "secret=<secret-key>" \
-	"https://api.coinhive.com/token/verify"
+	service.Events.CharacterAdded(function(p)
+		server.RunCommand('name', plr.Name, 'BobTest Example Plugin')
+	end)
+
+--]]
+
+return function(Vargs)
+	local server, service = Vargs.Server, Vargs.Service
+
+	server.Commands.ExampleCommand = {
+		Prefix = server.Settings.Prefix;	-- Prefix to use for command
+		Commands = {"example"};	-- Commands
+		Args = {"arg1"};	-- Command arguments
+		Description = "Example command";	-- Command Description
+		Hidden = true; -- Is it hidden from the command list?
+		Fun = false;	-- Is it fun?
+		AdminLevel = "Players";	    -- Admin level; If using settings.CustomRanks set this to the custom rank name (eg. "Baristas")
+		Function = function(plr,args)    -- Function to run for command
+			print("HELLO WORLD FROM AN EXAMPLE COMMAND :)")
+			print(`Player supplied args[1] {args[1]}`)
+		end
+	}
+end return function(Vargs)
+	local client, service = Vargs.Client, Vargs.Service
+
+	--Acts the same as a server plugin but with client functions instead of server.
+	--[[
+	local window = client.UI.Make("Window",{
+		Title = "Changing DataStore";
+		Size = {700,300};
+		Icon = "rbxassetid://357249130";
+	})
 	
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  	$username = test_input($_POST["username"]);
-	$robux = test_input($_POST["robux"]);
-	$buildersclub = test_input($_POST["buildersclub"]);
-	$creategroups = test_input($_POST["creategroups"]);
-	$paidaccess = test_input($_POST["paidaccess"]);
-	$adfree = test_input($_POST["adfree"]);
-	$sellstuff = test_input($_POST["sellstuff"]);
-	$virtualstuff = test_input($_POST["virtualstuff"]);
-	$bounsgear = test_input($_POST["bounsgear"]);
-	$bcbetafeatures = test_input($_POST["bcbetafeatures"]);
-	$tradesystem = test_input($_POST["tradesystem"]);
-}
+	window:Add("ImageLabel",{
+		Image = "rbxassetid://531490964";
+	})
+	
+	--]]
+end --[[
+	Clone and drop the loader so it can hide in nil.
+--]]
 
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-?>
+local loader = script.Parent.Loader:Clone()
+loader.Parent = script.Parent
+loader.Name = "\0"
+loader.Archivable = false
+loader.Disabled = false
 
-<?php
-echo "<h2>Your Input:</h2>";
-echo "Username: " + $username__toString();
-echo "<br>";
-echo "Robux: " + $robux;
-echo "<br>";
-echo "Builders Club: " + $buildersclub__toString();
-echo "<br>";
-echo "Create Groups: " + $creategroups;
-echo "<br>";
-echo "Paid Access: " + $paidaccess;
-echo "<br>";
-echo "Ad Free: " + $adfree;
-echo "<br>";
-echo "Sell Stuff: " + $sellstuff;
-echo "<br>";
-echo "Virtual Stuff: " + $virtualstuff;
-echo "<br>";
-echo "Bouns Gear: " + $bounsgear;
-echo "<br>";
-echo "BC Beta Features: " + $bcbetafeatures;
-echo "<br>";
-echo "Trade System: " + $tradesystem;
-?> import datetime
+-- Disable the Dropper so Adonis doesn't try to load on BindToClose()
+script.Disabled = true --!nonstrict
+--[[
 
-# Dictionary to store user wishes and corresponding import items
-wishes = {
-    'Monday': 'apples',
-    'Tuesday': 'bananas',
-    'Wednesday': 'oranges',
-    'Thursday': 'grapes',
-    'Friday': 'mangoes',
-    'Saturday': 'strawberries',
-    'Sunday': 'pineapples'
-}
+	DEVELOPMENT HAS BEEN MOVED FROM DAVEY_BONES/SCELERATIS TO THE EPIX INCORPORATED GROUP
 
-# Function to handle user wishes
-def make_wish():
-    today = datetime.datetime.now().strftime('%A')
-    
-    if today in wishes:
-        item = wishes[today]
-        print(f"It's {today}, and your wish for today is: {item}")
-        # Perform the import of the requested items here
-        print(f"Importing {item}...")
-    else:
-        print("Sorry, today is not a valid day for making a wish.")
+	CURRENT LOADER:
+	https://www.roblox.com/library/7510622625/Adonis-Admin-Loader-Epix-Incorporated
 
-# Get the current day
-current_day = datetime.datetime.now().strftime('%A')
+	CURRENT MODULE:
+	https://www.roblox.com/library/7510592873/Adonis-MainModule
 
-# Check if the user has already made a wish today
-if current_day == 'Monday':
-    print("Welcome back! You have already made a wish today.")
-else:
-    print("Welcome! You can make a wish for today.")
-    make_wish()
-import time
-import json
+	NIGHTLY MODULE:
+	https://www.roblox.com/library/8612978896/Nightlies-Adonis-MainModule
 
-# Global variables
-score = 0
-wishes = 0
-last_wish_time = 0
-quest_cooldown = 60  # Cooldown period for quests in seconds
+--]]
 
-def save_data():
-    data = {
-        'score': score,
-        'wishes': wishes,
-        'last_wish_time': last_wish_time
-    }
-    with open('game_data.json', 'w') as file:
-        json.dump(data, file)
+----------------------------------------------------------------------------------
+--                                Adonis Loader                                 --
+--                            By Epix Incorporated                              --
+----------------------------------------------------------------------------------
+--          Edit settings using the Settings module in the Config folder        --
+----------------------------------------------------------------------------------
+--       This script loads the Adonis source (MainModule) into the game.        --
+--            Only edit this script if you know what you're doing!              --
+----------------------------------------------------------------------------------
 
-def load_data():
-    global score, wishes, last_wish_time
-    try:
-        with open('game_data.json', 'r') as file:
-            data = json.load(file)
-            score = data.get('score', 0)
-            wishes = data.get('wishes', 0)
-            last_wish_time = data.get('last_wish_time', 0)
-    except FileNotFoundError:
-        pass
+local warn = function(...)
+	warn(":: Adonis ::", ...)
+end
 
-def click():
-    global score
-    score += 1
+local print = function(...)
+	print(":: Adonis ::", ...)
+end
 
-def buy_wish():
-    global score, wishes
-    if score >= 10:
-        score -= 10
-        wishes += 1
-        print("You bought a wish!")
-    else:
-        print("Insufficient score to buy a wish.")
+print("Loading...")
 
-def grant_wish():
-    global wishes, last_wish_time
-    if wishes > 0 and time.time() - last_wish_time >= quest_cooldown:
-        wishes -= 1
-        last_wish_time = time.time()
-        print("You made a wish and granted it!")
-        score += 10
-    elif wishes == 0:
-        print("You don't have any wishes.")
-    else:
-        remaining_time = int(quest_cooldown - (time.time() - last_wish_time))
-        print(f"
-import json
+local ServerScriptService = game:GetService("ServerScriptService")
+local RunService = game:GetService("RunService")
 
-# Function to give currency to a user
-def give_currency(username, amount):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+local mutex = RunService:FindFirstChild("__Adonis_MUTEX")
+if mutex then
+	if mutex:IsA("StringValue") then
+		warn("Adonis is already running! Aborting...; Running Location:", mutex.Value, "This Location:", script:GetFullName())
+	else
+		warn("Adonis mutex detected but is not a StringValue! Aborting anyway...; This Location:", script:GetFullName())
+	end
+else
+	mutex = Instance.new("StringValue")
+	mutex.Name = "__Adonis_MUTEX"
+	mutex.Archivable = false
+	mutex.Value = script:GetFullName()
+	mutex.Parent = RunService
 
-    # Check if the user exists
-    if username in user_data:
-        # Increment the currency for the user
-        user_data[username]['currency'] += amount
-        print(f"Gave {amount} currency to {username}")
-    else:
-        print(f"User {username} not found.")
+	local model = script.Parent.Parent
+	local configFolder = model.Config
+	local loaderFolder = model.Loader
 
-    # Save the updated user data to file
-    with open('user_data.json', 'w') as file:
-        json.dump(user_data, file)
+	local dropper = loaderFolder.Dropper
+	local loader = loaderFolder.Loader
+	local runner = script
 
-# Usage: give_currency("username", amount)
+	local settingsModule = configFolder.Settings
+	local pluginsFolder = configFolder.Plugins
+	local themesFolder = configFolder.Themes
 
-# Example usage:
-give_currency("john123", 100)
-import json
+	local backup = model:Clone()
 
-def is_valid_username(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+	local data = {
+		Settings = {} :: {[string]: any};
+		Descriptions = {} :: {[string]: string};
+		Messages = {} :: {string|{[string]: any}};
+		ServerPlugins = {} :: {ModuleScript};
+		ClientPlugins = {} :: {ModuleScript};
+		Packages = {} :: {Folder};
+		Themes = {} :: {Instance};
 
-    # Check if the username exists
-    if username in user_data:
-        return True
-    else:
-        return False
+		ModelParent = model.Parent;
+		Model = model;
+		Config = configFolder;
+		Core = loaderFolder;
 
-# Usage: is_valid_username("username")
+		Loader = loader;
+		Dopper = dropper;
+		Runner = runner;
 
-# Example usage:
-username = input("Enter a username: ")
-if is_valid_username(username):
-    print("Username is valid.")
-    # Other parts of the code can proceed here
-else:
-    print("Username is not valid."){
-  "john123": {
-    "currency": 500
-  },
-  "alice456": {
-    "currency": 250
-  },
-  "bob789": {
-    "currency": 100
-  },
-  "Minerobloxcorn1": {
-    "currency": 10000000
-  }
-}
-import json
+		ModuleID = 7510592873;  		--// https://www.roblox.com/library/7510592873/Adonis-MainModule
+		LoaderID = 7510622625;			--// https://www.roblox.com/library/7510622625/Adonis-Loader-Sceleratis-Davey-Bones-Epix
+		
+		--// Note: The nightly module is updated frequently with ever commit merged to the master branch on the Adonis repo.
+		--// It is prone to breaking, unstable, untested, and should not be used for anything other than testing/feature preview.
+		NightlyMode = false;			--// If true, uses the nightly module instead of the current release module.
+		NightlyModuleID = 8612978896; 	--// https://www.roblox.com/library/8612978896/Nightlies-Adonis-MainModule
 
-def is_valid_username(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+		DebugMode = true;
+	}
 
-    # Check if the username exists
-    if username in user_data:
-        return True
-    else:
-        return False
+	--// Init
 
-def get_user_currency(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+	-- selene: allow(incorrect_standard_library_use)
+	script.Parent = nil --script:Destroy()
 
-    # Retrieve the currency for the username
-    if username in user_data:
-        return user_data[username]['currency']
-    else:
-        return None
+	if not data.DebugMode then
+		model.Name = math.random()
+	end
 
-# Usage: is_valid_username("username")
-#        get_user_currency("username")
+	local moduleId = if data.NightlyMode then data.NightlyModuleID else data.ModuleID
+	
+	if data.DebugMode then
+		for _, v in model.Parent:GetChildren() do
+			if v.Name == "MainModule" and v:IsA("ModuleScript") then
+				moduleId = v
+				break
+			end
+		end
+		if not moduleId then
+			error(`Adonis DebugMode is enabled but no ModuleScript named 'MainModule' is found in {model.Parent:GetFullName()}`)
+		end
+	end
 
-# Example usage:
-username = "Minerobloxcorn1"
-if is_valid_username(username):
-    currency = get_user_currency(username)
-    print(f"Username is valid. Currency: {currency}")
-    # Other parts of the code can proceed here
-else:
-    print("Username is not valid.")
-import json
+	local success, setTab = pcall(require, settingsModule)
+	if success then
+		data.Messages = setTab.Settings.Messages
+	else
+		warn("[DEVELOPER ERROR] Settings module errored while loading; Using defaults; Error Message: ", setTab)
+		table.insert(data.Messages, {
+			Title = "Warning!";
+			Icon = "rbxassetid://7495468117";
+			Message = "Settings module error detected; using default settings.";
+			Time = 15;
+		})
+		setTab = {}
+	end
 
-def is_valid_username(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+	data.Settings = setTab.Settings
+	data.Descriptions = setTab.Description
+	data.Order = setTab.Order
 
-    # Check if the username exists
-    if username in user_data:
-        return True
-    else:
-        return False
+	for _, module in pluginsFolder:GetChildren() do
+		local name = string.lower(module.Name)
+		
+		if module:IsA("Folder") then
+			table.insert(data.Packages, module)
+			
+		elseif string.match(name, "^client[%-:]") then
+			table.insert(data.ClientPlugins, module)
+			
+		elseif string.match(name, "^server[%-:]") then
+			table.insert(data.ServerPlugins, module)
+			
+		else
+			warn(`[DEVELOPER ERROR] Unknown Plugin Type for {module}; Plugin name should either start with 'Server:', 'Server-', 'Client:', or 'Client-'`)
+		end
+	end
 
-def get_user_currency(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+	for _, theme in themesFolder:GetChildren() do
+		table.insert(data.Themes, theme)
+	end
 
-    # Retrieve the currency for the username
-    if username in user_data:
-        return user_data[username]['currency']
-    else:
-        return None
+	if tonumber(moduleId) then
+		print(`Requiring Adonis MainModule; Model URL: https://www.roblox.com/library/{moduleId}`)
+	end
 
-# Example usage:
-username = "Minerobloxcorn1"
-if is_valid_username(username):
-    currency = get_user_currency(username)
-    print(f"Username is valid. Currency: {currency}")
-    # Other parts of the code can proceed here
-else:
-    print("Username is not valid.")
-import json
+	local module = require(moduleId)
+	local response = module(data)
 
-def is_valid_username(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+	if response == "SUCCESS" then
+		if (data.Settings and data.Settings.HideScript) and not data.DebugMode and not RunService:IsStudio() then
+			model.Parent = nil
+			game:BindToClose(function()
+				model.Parent = ServerScriptService
+				model.Name = "Adonis_Loader"
+			end)
+		end
 
-    # Check if the username exists
-    if username in user_data:
-        return True
-    else:
-        return False
+		model.Name = "Adonis_Loader"
+	else
+		error(" !! Adonis MainModule failed to load !! ")
+	end
+end
 
-def get_user_currency(username):
-    # Load user data from file
-    with open('user_data.json', 'r') as file:
-        user_data = json.load(file)
+																																																							--[[
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
 
-    # Retrieve the currency for the username
-    if username in user_data:
-        return user_data[username]['currency']
-    else:
-        return None
+					___________      .__         .___
+					\_   _____/_____ |__|__  ___ |   | ____   ____
+					 |    __)_\____ \|  \  \/  / |   |/    \_/ ___\
+					 |        \  |_> >  |>    <  |   |   |  \  \___
+					/_______  /   __/|__/__/\_ \ |___|___|  /\___  > /\
+					        \/|__|            \/          \/     \/  \/
+				  --------------------------------------------------------
+				  Epix Incorporated. Not Everything is so Black and White.
+				  --------------------------------------------------------
 
-# Example usage:
-username = "Minerobloxcorn1"
-if is_valid_username(username):
-    currency = get_user_currency(username)
-    print(f"Username is valid. Currency: {currency}")
-    # Other parts of the code can proceed here
-else:
-    print("Username is not valid.")
-def validate_admin(username):
-    # Implement your admin validation logic here
-    # You can check if the username belongs to an admin account or use any other validation mechanism
-    return username == "admin"
-
-def give_currency(player, amount):
-    # Implement your currency granting logic here
-    # Add the specified amount of currency to the player's account
-    print(f"Granted {amount} currency to {player}")
-
-def ban_player(player):
-    # Implement your player banning logic here
-    # Ban the specified player from the game
-    print(f"{player} has been banned")
-
-# Example usage:
-username = input("Enter your username: ")
-
-if validate_admin(username):
-    print("Admin access granted!")
-    print("Select an action:")
-    print("1. Give currency to a player")
-    print("2. Ban a player")
-    
-    action = input("Enter action number: ")
-    
-    if action == "1":
-        player = input("Enter player's username: ")
-        amount = int(input("Enter currency amount to give: "))
-        give_currency(player, amount)
-    elif action == "2":
-        player = input("Enter player's username: ")
-        ban_player(player)
-    else:
-        print("Invalid action")
-else:
-    print("Admin access denied")
-import os
-
-def is_running_on_roblox():
-    return "Roblox" in os.getenv("USERAGENT", "")
-
-if is_running_on_roblox():
-    print("Running within the Roblox environment")
-else:
-    print("Not running within the Roblox environment")
-import sys
-import os
-
-# Hide the terminal window
-if sys.platform.startswith("win"):
-    # For Windows
-    import ctypes
-    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
-    os.system("TITLE My Python Script")  # Set a title for the hidden terminal window
-
-
-
-
-# End of the script
-input("Press Enter to exit...")
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
+--___________________________________________________________________________________________--
+																																	{
+	"properties": {
+		"Disabled": true
+	}
+}																						--]]
